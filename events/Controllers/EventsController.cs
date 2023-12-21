@@ -9,9 +9,9 @@ namespace events.Controllers
     [ApiController]
     public class EventsController : ControllerBase
     {
-       private readonly IDataContext _context;
+       private readonly DataContext _context;
         private static int count = 0;
-        public EventsController(IDataContext dataContext)
+        public EventsController(DataContext dataContext)
         {
             _context = dataContext;
         }
@@ -26,7 +26,7 @@ namespace events.Controllers
         [HttpGet("{id}")]
         public ActionResult Get(int id)
         {
-            var eve = _context.EventList.Find(e => e.Id == id);
+            var eve = _context.EventList.ToList().Find(e => e.Id == id);
             if (eve is null)
             {
                 return NotFound();
@@ -47,7 +47,7 @@ namespace events.Controllers
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] Event value)
         {
-            var ev = _context.EventList.Find(x => x.Id == id);
+            var ev = _context.EventList.ToList().Find(x => x.Id == id);
             if (ev == null)
             {
                 return NotFound();
@@ -60,7 +60,7 @@ namespace events.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            var ev = _context.EventList.Find(x => x.Id == id);
+            var ev = _context.EventList.ToList().Find(x => x.Id == id);
             if (ev == null)
             {
                 return NotFound();

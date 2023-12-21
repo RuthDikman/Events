@@ -1,19 +1,16 @@
 ﻿using CsvHelper;
+using Microsoft.EntityFrameworkCore;
 using System.Formats.Asn1;
 using System.Globalization;
 
 namespace events
 {
-    public class DataContext : IDataContext
+    public class DataContext : DbContext
     {
-        public List<Event> EventList { get; set; }
-        public DataContext()
+        public DbSet<Event> EventList { get; set; }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            using (var reader = new StreamReader("data.csv"))
-            using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
-            {
-                EventList = csv.GetRecords<Event>().ToList();
-            }
+            optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=sample_db");
         }
     }
 }

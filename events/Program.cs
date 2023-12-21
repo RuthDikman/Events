@@ -13,8 +13,9 @@ builder.Services.AddCors(opt => opt.AddPolicy("MyPolicy", policy =>
 {
     policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
 }));
-builder.Services.AddSingleton<DataContext>();
-builder.Services.AddSingleton<IDataContext, DataContext>();
+builder.Services.AddDbContext<DataContext>();
+//builder.Services.AddSingleton<DataContext>();
+//builder.Services.AddSingleton<IDataContext, DataContext>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
